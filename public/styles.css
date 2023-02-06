@@ -30,4 +30,12 @@
     z-index: 1;
     position: absolute;
     transform: translate(-20%, -125%);
+    transition: right 0.5s;
+}
+
+.absolute-piece {
+    position: absolute;
+    height: 20px;
+    bottom: 20vh;
+    left: 20%;
 }

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Token from "./Token";
+import Token from "../Token";
 
 function Block(props) {
 
@@ -9,7 +9,7 @@ function Block(props) {
         style={{ color: "props.num % 2 === 0 ? red : blue" }}
       >
         <p>{props.num}</p>
-        {props.token === true ? <Token /> : null}
+        {props.token !== null ? <Token type={props.token} num={props.num}/> : null}
       </div>
     );
 }
