@@ -5,7 +5,7 @@ import Scoreboard from "./Components/Scoreboard";
 
 function App() {
 
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(true);
 
   function handleClick(){
     setGameStarted(true);

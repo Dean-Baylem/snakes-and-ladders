@@ -7,7 +7,7 @@ function Scoreboard(props) {
     return (
       <div>
         <div>
-          <h5>
+          { props.gameFinished !== true ? <h5>
             Current Player: {props.playerName} | Current Position:{" "}
             {props.playerPosition} | Token:{" "}
             <img
@@ -15,7 +15,7 @@ function Scoreboard(props) {
               alt={props.token}
               style={{position: "relative", height: "20px", top: "5px"}}
             ></img>
-          </h5>
+          </h5> : <h5>Game finished</h5>}
         </div>
       </div>
     );

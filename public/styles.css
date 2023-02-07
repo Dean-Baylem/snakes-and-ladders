@@ -29,7 +29,31 @@
     height: 20px;
     z-index: 1;
     position: absolute;
-    transform: translate(-20%, -125%);
+    transform: translate(50%, -70%);
+    transition: right 0.5s;
+}
+
+.yellow-piece { 
+    height: 20px;
+    z-index: 1;
+    position: absolute;
+    transform: translate(-150%, -70%);
+    transition: right 0.5s;
+}
+
+.red-piece { 
+    height: 20px;
+    z-index: 1;
+    position: absolute;
+    transform: translate(-150%, -220%);
+    transition: right 0.5s;
+}
+
+.green-piece { 
+    height: 20px;
+    z-index: 1;
+    position: absolute;
+    transform: translate(50%, -220%);
     transition: right 0.5s;
 }
 
@@ -38,4 +62,28 @@
     height: 20px;
     bottom: 20vh;
     left: 20%;
+}
+
+.snakeStart {
+    color: red; 
+    position: absolute;
+    transform: translate(350%, -160%);
+}
+
+.snakeEnd {
+    color: red; 
+    position: absolute;
+    transform: translate(350%, -160%);
+}
+
+.ladderStart {
+    color: blue; 
+    position: absolute;
+    transform: translate(350%, -160%);
+}
+
+.ladderEnd {
+    color: blue; 
+    position: absolute;
+    transform: translate(350%, -160%);
 }

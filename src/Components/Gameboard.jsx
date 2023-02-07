@@ -18,6 +18,8 @@ const [players, setPlayers] = useState([
   { name: "player4", tokenPosition: 0, id: 4, token: "images/green-piece.png" },
 ]);
 const [currentPlayer, setCurrentPlayer] = useState(players[0]);
+const [gameFinished, setGameFinished] = useState(false);
+const [waiting, setWaiting] = useState(false);
 
   let topRow = [100, 99, 98, 97, 96, 95, 94, 93, 92, 91];
   let secRow = [90, 89, 88, 87, 86, 85, 84, 83, 82, 81];
@@ -55,9 +57,11 @@ const [currentPlayer, setCurrentPlayer] = useState(players[0]);
     if (ladderStarts.includes(newValue)) {
       console.log("Landed on " + newValue + ". It's a ladder! Up we go!");
               setValues(newValue);
+              setWaiting(true);
         sleep(2000).then(() => {
           console.log("Now we are at position: " + ladderEnds[ladderStarts.indexOf(newValue)]);
           setValues(ladderEnds[ladderStarts.indexOf(newValue)]);
+          setWaiting(false);
         })
     }
     // Check if tile is a snake
@@ -72,12 +76,14 @@ const [currentPlayer, setCurrentPlayer] = useState(players[0]);
     // Set the current players position to new result.
     if (newValue >= 100) {
       alert("Game over - winner is " + currentPlayer.name);
+      setGameFinished(true);
     } else {
       setValues(newValue);
     }
   }
 
   function handleClick() {
+    if (waiting !== true) {
     // Roll the Die and work out new result
     dieRoll();
     // Change current player to next in line
@@ -86,196 +92,176 @@ const [currentPlayer, setCurrentPlayer] = useState(players[0]);
       setCurrentPlayer(players[0]);
     } else {
       setCurrentPlayer(players[currentPlayer.id]);
+    }}
+    else {
+      console.log("Please wait");
     }
   }
 
   return (
     <div>
-    <Scoreboard playerName={currentPlayer.name} playerPosition={currentPlayer.tokenPosition} token={currentPlayer.token}/>
+      <Scoreboard
+        playerName={currentPlayer.name}
+        playerPosition={currentPlayer.tokenPosition}
+        token={currentPlayer.token}
+        gameFinished={gameFinished}
+      />
       <div className="game-board">
         {topRow.map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {secRow.reverse().map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {thirdRow.map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {fourthRow.reverse().map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {fifthRow.map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {sixthRow.reverse().map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {seventhRow.map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {eigthRow.reverse().map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {ninthRow.map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
         {tenthRow.reverse().map((num) => (
           <Block
-            token={
-              players[0].tokenPosition === num
-                ? players[0].token
-                : players[1].tokenPosition === num
-                ? players[1].token
-                : players[2].tokenPosition === num
-                ? players[2].token
-                : players[3].tokenPosition === num
-                ? players[3].token
-                : null
-            }
+            p1Token={players[0].tokenPosition === num ? players[0].token : null}
+            p2Token={players[1].tokenPosition === num ? players[1].token : null}
+            p3Token={players[2].tokenPosition === num ? players[2].token : null}
+            p4Token={players[3].tokenPosition === num ? players[3].token : null}
             key={num}
             color={num % 2 === 0 ? "blue-box" : "red-box"}
             num={num}
+            snakeStart={snakeStarts.includes(num) ? true : false}
+            snakeEnd={snakeEnds.includes(num) ? true : false}
+            ladderStart={ladderStarts.includes(num) ? true : false}
+            ladderEnd={ladderEnds.includes(num) ? true : false}
           />
         ))}
+        {gameFinished !== true ? 
         <button onClick={handleClick}>
           {currentPlayer.name}! Roll the Die!
         </button>
+        : <button onClick={null}>Game over</button>}
       </div>
     </div>
   );
